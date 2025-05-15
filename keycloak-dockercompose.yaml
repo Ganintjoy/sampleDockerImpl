@@ -1,0 +1,28 @@
+services:
+  keyCloak:
+    image: keycloak/keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/testdb
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: infosmart@1
+    ports:
+      - "9090:8080"
+    command: start-dev
+
+  keycloak-db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: infosmart@1
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
